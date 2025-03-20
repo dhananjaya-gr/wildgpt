@@ -1,8 +1,8 @@
 # Hackoholic Bot
 
 ## Overview
-Hackoholic Bot is a Python-based project designed to process and analyze PDF documents and web-scraped content. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing.
-We aim to solve 
+Hackoholic Bot is a highly maintainable Python-based Generative AI project designed to process and analyze PDF documents and web-scraped content. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing.
+We designed the cost-effective bot to scrape online data from web pages. The process of opening web pages and extracting data is automated. Our custom open source ollama model generates the rich information on wildlife, biodiversity, and conservation using the gathered knowledge base
 
 ## Authors
 - Mrinal Raj
@@ -26,6 +26,16 @@ We aim to solve
 - `langchain.retrievers.multi_query`
 - `webscrap`
 - `langchain.schema`
+
+## Models
+```sh
+(mrinal_env) (base) mriraj@hackaholic % ollama list
+NAME                                                 ID              SIZE      MODIFIED     
+nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago     
+**Hackaholics:latest                                   5355ef75aa0b    4.9 GB    37 hours ago    **
+llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
+(mrinal_env) (base) mriraj@hackaholic hackaholic % 
+```
 
 ## Constants
 - `EMBEDDING_MODEL`: 'nomic-embed-text'
