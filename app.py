@@ -249,9 +249,8 @@ def chat():
 
     try:
         # Process the query using the chain
-        questions = [query]
-        res = chain.invoke(input=(questions))
-        return jsonify({"response": res})
+        res = chain.invoke(input=([query]))
+        return jsonify({'response': res})
     except Exception as e:
         logging.error(f"Error processing query: {e}")
         return jsonify({"error": "An error occurred while processing the query."}), 500
