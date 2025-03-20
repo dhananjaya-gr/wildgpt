@@ -96,7 +96,8 @@ Creates a chain from the retriever and the language model.
 Creates a new chat session by sending a POST request to the /chats endpoint.
 
 **Implementation:**
-`async function createChat() {
+```javascript
+async function createChat() {
   const res = await fetch("http://localhost:8000" + "/chats", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -106,15 +107,18 @@ Creates a new chat session by sending a POST request to the /chats endpoint.
     return Promise.reject({ status: res.status, data });
   }
   return data;
-}`
+}
+```
 
-`createChat()
+```javascript
+createChat()
   .then(data => {
     console.log("Chat created successfully:", data);
   })
   .catch(error => {
     console.error("Error creating chat:", error);
-  });`
+  });
+```
 
 **Details:**
 
