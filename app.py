@@ -1,7 +1,3 @@
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
 ##########################################
 #  Authors:
 #      1. Mrinal Raj
@@ -26,6 +22,15 @@ from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_ollama import OllamaEmbeddings
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
+
 
 # Constants
 EMBEDDING_MODEL = 'nomic-embed-text'
@@ -198,12 +203,6 @@ def initialize_chain():
     # Create a chain
     chain = create_chain(retriever, llm)
     logging.info("Chain initialized successfully.")
-
-
-@app.route('/chats', methods=['POST'])
-def chats():
-    print('hi')
-    return jsonify({"id": "1"})
 
 @app.route('/chat', methods=['POST'])
 def chat():
