@@ -92,6 +92,38 @@ Creates a chain from the retriever and the language model.
 **Returns:**
 - The chain.
 
+### `createChat()`
+Creates a new chat session by sending a POST request to the /chats endpoint.
+
+**Implementation:**
+`async function createChat() {
+  const res = await fetch("http://localhost:8000" + "/chats", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, data });
+  }
+  return data;
+}`
+
+`createChat()
+  .then(data => {
+    console.log("Chat created successfully:", data);
+  })
+  .catch(error => {
+    console.error("Error creating chat:", error);
+  });`
+
+**Details:**
+
+- Method: POST
+- URL: http://localhost:8000/chats
+- Headers: Content-Type: application/json
+- Response: The function returns a promise that resolves to the JSON data from the response if the request is successful. If the request fails, it rejects the promise with an object containing the status code and the response data.
+
+
 ### `main()`
 Main function to run the Hackoholic Bot. It ingests documents, splits them into chunks, creates a vector database, and processes user queries.
 
