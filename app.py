@@ -1,8 +1,8 @@
 ##########################################
 #  Authors:
-#      1. Mrinal Raj
+#      1. Sri Sai Pamu
 #      2. Dhananjaya G R
-#      3. Sri Sai Pamu
+#      3. Mrinal Raj
 ##########################################
 
 # MODEL = 'Hackaholics'
@@ -22,6 +22,8 @@ from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_ollama import OllamaEmbeddings
+from webscrap import WebscrapOnlineResearch
+from langchain.schema import Document
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -42,6 +44,7 @@ logging.basicConfig(level=logging.WARNING)
 
 # Folder containing Index of all PDF documents
 DOC_FOLDER = os.path.join(os.path.dirname(__file__), "Index/")
+RES_FOLDER = os.path.join(os.path.dirname(__file__), "Resources/")
 
 def extract_links_from_pdf(pdf_path):
     """
@@ -81,8 +84,9 @@ def ingest_pdf(doc_path, folder=False):
     :param folder: boolean indicating if the path is a folder
     :return: the text content of the PDF file(s)
     """
+    global web_scrap_obj
     if not folder:
-        if doc_path.startswith('http'):
+        if doc_path.startswith('http') and doc_path.endswith('.pdf'):
             loader = OnlinePDFLoader(doc_path)
             data = loader.load()
             logging.info("Online PDF Loaded successfully")
@@ -93,8 +97,10 @@ def ingest_pdf(doc_path, folder=False):
             logging.info("Unstructured PDF Loaded successfully")
             return data
         else:
-            logging.error(f"Invalid file path: {doc_path}")
-            return None
+            logging.info("Webscraping the online research paper")
+            web_scrap_obj = WebscrapOnlineResearch()
+            data = web_scrap_obj.get_page_source_as_string(doc_path)
+            return data
     else:
         data_pool = list()
         all_links = []
@@ -117,6 +123,8 @@ def split_documents(documents):
     :return: the chunks
     """
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=300)
+    if isinstance(documents, str):
+        documents = [Document(page_content=documents)]
     chunks = text_splitter.split_documents(documents)
     logging.info("Done splitting")
     logging.info(f"Number of chunks: {len(chunks)}")
@@ -182,14 +190,30 @@ def initialize_chain():
     Initialize the chain before the first request to the Flask app.
     """
     global chain
-    # Load the PDF files from folder
-    data = ingest_pdf(DOC_FOLDER, folder=True)
-    if data is None:
-        logging.error("Failed to load documents.")
+    data_well = list()
+    index_data_pool, index_links = ingest_pdf(DOC_FOLDER, folder=True)
+    res_data_pool, links = ingest_pdf(RES_FOLDER, folder=True)
+
+    data_well = index_data_pool + res_data_pool
+
+    if not (index_data_pool and res_data_pool):
         return
 
+    if index_links:
+        document_pool = list()
+        for link in index_links[:2]:
+            data = ingest_pdf(link, folder=False)
+            if data and isinstance(data, str):
+                document_pool.append(Document(page_content=data))
+            else:
+                logging.info(f"Data is empty or not a valid string! for {link}")
+        data_well = data_well + document_pool
+
+    if data_well is None:
+        logging.error("Failed to load documents.")
+        return
     # Split the documents
-    chunks = split_documents(data)
+    chunks = split_documents(data_well)
 
     # Create a vector database
     vector_db = create_vector_db(chunks)

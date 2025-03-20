@@ -193,6 +193,10 @@ def main():
                 logging.info(f"Data is empty or not a valid string! for {link}")
         data_well = data_well + document_pool
 
+    if not data_well:
+        logging.error("Failed to load documents.")
+        return
+
     # Split the documents
     chunks = split_documents(data_well)
 
