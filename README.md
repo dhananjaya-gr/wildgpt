@@ -2,6 +2,7 @@
 
 ## Overview
 Hackoholic Bot is a Python-based project designed to process and analyze PDF documents and web-scraped content. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing.
+We aim to solve 
 
 ## Authors
 - Mrinal Raj
@@ -35,7 +36,7 @@ Hackoholic Bot is a Python-based project designed to process and analyze PDF doc
 
 ## Functions
 
-### `extract_links_from_pdf(pdf_path)`
+#### `extract_links_from_pdf(pdf_path)`
 Extracts all hyperlinks from a given PDF file from all the pages.
 
 **Parameters:**
@@ -44,7 +45,7 @@ Extracts all hyperlinks from a given PDF file from all the pages.
 **Returns:**
 - A list of unique URLs found in the PDF.
 
-### `ingest_pdf(doc_path, folder=False)`
+#### `ingest_pdf(doc_path, folder=False)`
 Ingests a PDF file or a folder of PDF files and returns the text content.
 
 **Parameters:**
@@ -54,7 +55,7 @@ Ingests a PDF file or a folder of PDF files and returns the text content.
 **Returns:**
 - The text content of the PDF file(s).
 
-### `split_documents(documents)`
+#### `split_documents(documents)`
 Splits the documents into smaller chunks.
 
 **Parameters:**
@@ -63,7 +64,7 @@ Splits the documents into smaller chunks.
 **Returns:**
 - The chunks.
 
-### `create_vector_db(chunks)`
+#### `create_vector_db(chunks)`
 Creates a vector database from the chunks.
 
 **Parameters:**
@@ -72,7 +73,7 @@ Creates a vector database from the chunks.
 **Returns:**
 - The vector database.
 
-### `create_retriever(vector_db, llm)`
+#### `create_retriever(vector_db, llm)`
 Creates a retriever from the vector database and the language model.
 
 **Parameters:**
@@ -82,7 +83,7 @@ Creates a retriever from the vector database and the language model.
 **Returns:**
 - The retriever.
 
-### `create_chain(retriever, llm)`
+#### `create_chain(retriever, llm)`
 Creates a chain from the retriever and the language model.
 
 **Parameters:**
@@ -92,7 +93,7 @@ Creates a chain from the retriever and the language model.
 **Returns:**
 - The chain.
 
-### `createChat()`
+#### `createChat()`
 Creates a new chat session by sending a POST request to the /chats endpoint.
 
 **Implementation:**
@@ -128,7 +129,7 @@ createChat()
 - Response: The function returns a promise that resolves to the JSON data from the response if the request is successful. If the request fails, it rejects the promise with an object containing the status code and the response data.
 
 
-### `main()`
+#### `main()`
 Main function to run the Hackoholic Bot. It ingests documents, splits them into chunks, creates a vector database, and processes user queries.
 
 ## Usage
