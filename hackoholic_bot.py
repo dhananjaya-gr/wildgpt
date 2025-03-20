@@ -204,7 +204,7 @@ def main():
     if index_links:
         document_pool = list()
         # links = ["https://conbio.onlinelibrary.wiley.com/doi/10.1111/csp2.13096", "https://www.sciencedirect.com/science/article/pii/S2351989424002208?via%3Dihub"]
-        for link in index_links[:2]:
+        for link in index_links:
             data = ingest_pdf(link, folder=False)
             if data and isinstance(data, str):
                 document_pool.append(Document(page_content=data))
