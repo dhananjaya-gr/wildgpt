@@ -26,9 +26,7 @@ MODEL = 'llama3.1'
 #logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.WARNING)
 
-DOC_FOLDER = "/Users/dguntira/Desktop/Sustainability/Index/"
-#DOC_FOLDER = os.path.join(os.path.dirname(__file__), "Index")
-#DOC_FOLDER = "/Users/dguntira/Desktop/Sustainability/Resources/"
+DOC_FOLDER = os.path.join(os.path.dirname(__file__), "Index/")
 
 def ingest_pdf(doc_path, folder=False):
     """
@@ -95,12 +93,14 @@ def create_retriever(vector_db, llm):
     :param llm: the language model
     :return: the retriever
     """
-    QUERY_PROMPT = PromptTemplate(input_variables=["question"],
-                                  template="""You are an AI language model assistant named as Hackaholic. Your task is to generate five 
-                                  different versions of the given user question to retrieve relevant documents from a vector database. 
-                                  By generating multiple perspectives on the user question, your goal is to help the user overcome some of the 
-                                  limitations of the distance-based similarity search. Provide these alternative questions separated by newlines.
+    QUERY_PROMPT = PromptTemplate(input_variables=["question"], #template="\f'{context_template}' Original question: {question}")
+                                  template="""You are an AI language model assistant named as Hackaholic.
+                                  Your task is to generate seven different versions of the question given by user to retrieve relevant documents from a vector database.
+                                  By generating multiple perspectives on the question by user, your goal is to help the user overcome some of the limitations of the distance-based similarity search.
+                                  Provide these alternative questions separated by newlines. Make sure to give enough information which covers the aspects of What, Why, When, Where, Who, How, and Which.
+                                  Also, initially before recieving your first query introduce yourself and start with a list of all the things you can do.
                                   Original question: {question}""")
+
     retriever = MultiQueryRetriever.from_llm(vector_db.as_retriever(), llm=llm, prompt=QUERY_PROMPT)
     logging.info("Retriever created...")
     return retriever
@@ -151,7 +151,7 @@ def main():
     # Process user queries
     while True:
         # Ask for user input
-        query = input("Hackaholic Bot here :-), how can i help you? (Type 'exit'/'quit'/'end' to quit): >>> ")
+        query = input("\n\n[Hackaholic Bot here]: How can i help you? (Type 'exit' or 'quit' or 'end' to quit): >>>> ")
         if query in ["\n", "", " "]:
             continue
         # Check if the user wants to exit
@@ -161,7 +161,7 @@ def main():
         # Invoke the chain to get response
         questions = [query]
         res = chain.invoke(input=(questions))
-        print(f"Response: {res}")
+        print(f"[Hackaholic Bot's Response]: \n{res}\n\n")
         questions = []
 
 if __name__ == "__main__":
