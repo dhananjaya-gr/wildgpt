@@ -12,3 +12,8 @@ fastembed
 pikepdf
 sentence-transformers
 fitz
+pymudb
+flask
+flask-cors
+selenium
+webdriver_manager
