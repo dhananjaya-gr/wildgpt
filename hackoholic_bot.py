@@ -21,18 +21,22 @@ from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_ollama import OllamaEmbeddings
+from webscrap import WebscrapOnlineResearch
+from langchain.schema import Document
 
-# Constants
 EMBEDDING_MODEL = 'nomic-embed-text'
-VECTOR_STORE_NAME = 'simple_rag'
+VECTOR_STORE_NAME='simple_rag'
 MODEL = 'llama3.1'
 
-# Set logging level
+#logging.basicConfig(level=logging.INFO)
 logging.basicConfig(level=logging.WARNING)
 
-# Folder containing Index of all PDF documents
 DOC_FOLDER = os.path.join(os.path.dirname(__file__), "Index/")
-
+RES_FOLDER = os.path.join(os.path.dirname(__file__), "Resources/")
+# DOC_FOLDER = "/Users/dguntira/Desktop/Sustainability/Index/"
+# DOC_FOLDER = "https://conbio.onlinelibrary.wiley.com/doi/10.1111/csp2.13096"
+#DOC_FOLDER = os.path.join(os.path.dirname(__file__), "Index")
+#DOC_FOLDER = "/Users/dguntira/Desktop/Sustainability/Resources/"
 def extract_links_from_pdf(pdf_path):
     """
     Extracts all hyperlinks from a given PDF file from all the pages.
@@ -71,8 +75,9 @@ def ingest_pdf(doc_path, folder=False):
     :param folder: boolean indicating if the path is a folder
     :return: the text content of the PDF file(s)
     """
+    global web_scrap_obj
     if not folder:
-        if doc_path.startswith('http'):
+        if doc_path.startswith('http') and doc_path.endswith('.pdf') :
             loader = OnlinePDFLoader(doc_path)
             data = loader.load()
             logging.info("Online PDF Loaded successfully")
@@ -83,8 +88,11 @@ def ingest_pdf(doc_path, folder=False):
             logging.info("Unstructured PDF Loaded successfully")
             return data
         else:
-            logging.error(f"Invalid file path: {doc_path}")
-            return None
+            logging.info("Webscraping the online research paper")
+
+            web_scrap_obj = WebscrapOnlineResearch()
+            data = web_scrap_obj.get_page_source_as_string(doc_path)
+            return data
     else:
         data_pool = list()
         all_links = []
@@ -107,6 +115,14 @@ def split_documents(documents):
     :return: the chunks
     """
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=300)
+    if isinstance(documents, str):
+            documents = [Document(page_content=documents)]  
+    # Convert your string into Document objects
+    # documents = [Document(page_content="This is the first document."),
+    #             Document(page_content="This is the second document.")]
+
+    # # Now, you can safely call split_documents
+    # chunks = text_splitter.split_documents(documents)
     chunks = text_splitter.split_documents(documents)
     logging.info("Done splitting")
     logging.info(f"Number of chunks: {len(chunks)}")
@@ -169,15 +185,40 @@ def main():
     # data = ingest_pdf(DOC_PATH)
 
     # Load the PDF files from folder
-    data, links = ingest_pdf(DOC_FOLDER, folder=True)
-    if data is None:
+    # data = ingest_pdf(DOC_FOLDER, folder=True)
+    # web_scrap_obj = WebscrapOnlineResearch()
+    
+    # data_pool = list()
+    data_well = list()
+    index_data_pool, index_links = ingest_pdf(DOC_FOLDER, folder=True)
+    res_data_pool, links = ingest_pdf(RES_FOLDER, folder=True)
+    # data.append(Document(page_content=res_data_pool))
+    data_well = index_data_pool + res_data_pool
+    # Convert your string into Document objects
+    # documents = [Document(page_content="This is the first document."),
+    #             Document(page_content="This is the second document.")]
+
+    if not (index_data_pool and res_data_pool):
         return
 
-    if links:
-        pass
+    if index_links:
+        document_pool = list()
+        # links = ["https://conbio.onlinelibrary.wiley.com/doi/10.1111/csp2.13096", "https://www.sciencedirect.com/science/article/pii/S2351989424002208?via%3Dihub"]
+        for link in index_links[:2]:
+            data = ingest_pdf(link, folder=False)
+            if data and isinstance(data, str):
+                document_pool.append(Document(page_content=data))
+            else:
+                # logging.error("Data is empty or not a valid string!")
+                logging.error("Data is empty or not a valid string!")
+            # document_pool.append(Document(page_content=data))
+            # data_pool.append(data)
+        data_well = data_well + document_pool
+        
+        
 
     # Split the documents
-    chunks = split_documents(data)
+    chunks = split_documents(data_well)
 
     # Create a vector database
     vector_db = create_vector_db(chunks)
