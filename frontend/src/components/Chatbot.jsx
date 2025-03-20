@@ -51,10 +51,10 @@ function Chatbot() {
         <div className="mt-3 font-urbanist text-primary-blue text-xl font-light space-y-2">
           <p>👋 Welcome!</p>
           <p>
-            I am powered by reasearch papers and Documents to provide to better
-            support on wildlife queries
+            Hey there !! I'm WildGPT, an AI-powered tool designed to scrape and 
+            consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation.
           </p>
-          <p>Ask me anything about the latest technology trends.</p>
+          <p>Ask me anything about the latest research trends.</p>
         </div>
       )}
       <ChatMessages messages={messages} isLoading={isLoading} />

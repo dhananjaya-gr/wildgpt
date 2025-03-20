@@ -5,7 +5,7 @@
 #      3. Sri Sai Pamu
 ##########################################
 
-# MODEL = 'Hackaholics'
+# MODEL = 'WildGPT'
 
 import os
 import re
@@ -143,7 +143,7 @@ def create_retriever(vector_db, llm):
     :return: the retriever
     """
     QUERY_PROMPT = PromptTemplate(input_variables=["question"], #template="\f'{context_template}' Original question: {question}")
-                                  template="""You are an AI language model assistant named as Hackaholic.
+                                  template="""You are an AI language model assistant named as WildGPT.
                                   Your task is to generate seven different versions of the question given by user to retrieve relevant documents from a vector database.
                                   By generating multiple perspectives on the question by user, your goal is to help the user overcome some of the limitations of the distance-based similarity search.
                                   Provide these alternative questions separated by newlines. Make sure to give enough information which covers the aspects of What, Why, When, Where, Who, How, and Which.
@@ -213,19 +213,32 @@ def main():
     chain = create_chain(retriever, llm)
 
     # Process user queries
+    init_prompt = """ Hey there !!
+    I'm WildGPT, an AI-powered tool designed to scrape and consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation.
+    Ask me anything about the latest research trends.
+
+    If you want to end conversation, type 'exit' or 'quit' or 'end'
+    """
+    print(init_prompt)
+    print("===="*50)
+    # Process user queries
     while True:
         # Ask for user input
-        query = input("\n\n[Hackaholic Bot here]: How can i help you? (Type 'exit' or 'quit' or 'end' to quit): >>>> ")
+        query = input("\n\n[User's query]: >>> ")
         if query in ["\n", "", " "]:
+            print("\n")
             continue
         # Check if the user wants to exit
         if query.lower() in ["exit", "quit", "end"]:
+            print("Hope i've been helpful. Bye for now!")
+            print("Summon me again if you need any data related to wildlife, biodiversity, and conservation")
             break
 
         # Invoke the chain to get response
         questions = [query]
         res = chain.invoke(input=(questions))
-        print(f"[Hackaholic Bot's Response]: \n{res}\n\n")
+        print(f"\n[WildGPT's Response]: \n{res}\n")
+        print("===="*50)
         questions = []
 
 if __name__ == "__main__":

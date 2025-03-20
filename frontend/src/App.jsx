@@ -20,7 +20,7 @@ function App() {
           <div className="flex items-center justify-between h-full w-full pt-4 pb-2 bg-white bg-opacity-70 backdrop-blur-md relative z-10 rounded-lg">
             <img src={logo} className="w-32" alt="logo" />
             <h1 className="font-urbanist text-[1.65rem] font-semibold text-center flex-grow">
-              Wildlife AI Chatbot
+              WildGPT
             </h1>
             <img src={bird} className="w-32" alt="logo" />
           </div>

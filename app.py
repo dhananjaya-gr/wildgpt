@@ -5,7 +5,7 @@
 #      3. Mrinal Raj
 ##########################################
 
-# MODEL = 'Hackaholics'
+# MODEL = 'WildGPT'
 
 import os
 import re
@@ -152,7 +152,7 @@ def create_retriever(vector_db, llm):
     :return: the retriever
     """
     QUERY_PROMPT = PromptTemplate(input_variables=["question"], #template="\f'{context_template}' Original question: {question}")
-                                  template="""You are an AI language model assistant named as Hackaholic.
+                                  template="""You are an AI language model assistant named as WildGPT.
                                   Your task is to generate seven different versions of the question given by user to retrieve relevant documents from a vector database.
                                   By generating multiple perspectives on the question by user, your goal is to help the user overcome some of the limitations of the distance-based similarity search.
                                   Provide these alternative questions separated by newlines. Make sure to give enough information which covers the aspects of What, Why, When, Where, Who, How, and Which.
@@ -232,7 +232,7 @@ def initialize_chain():
 @app.route('/chat', methods=['POST'])
 def chat():
     """
-    Flask API endpoint for chatting with the Hackaholic Bot.
+    Flask API endpoint for chatting with the WildGPT Bot.
     Expects a JSON payload with a 'query' field.
     """
     global chain
