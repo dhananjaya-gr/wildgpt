@@ -32,9 +32,9 @@ We designed the cost-effective bot to scrape online data from web pages. The pro
 (mrinal_env) (base) mriraj@hackaholic % ollama list
 NAME                                                 ID              SIZE      MODIFIED     
 nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago     
-**Hackaholics:latest                                   5355ef75aa0b    4.9 GB    37 hours ago    **
+Hackaholics:latest                                   5355ef75aa0b    4.9 GB    37 hours ago    
 llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
-(mrinal_env) (base) mriraj@hackaholic hackaholic % 
+(mrinal_env) (base) mriraj@hackaholic % 
 ```
 
 ## Constants
