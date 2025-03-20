@@ -26,6 +26,15 @@ We designed the cost-effective bot to scrape online data from web pages. The pro
 - `langchain.retrievers.multi_query`
 - `webscrap`
 - `langchain.schema`
+- `selenium`
+- `chrome`
+- `python 3.12 (preferred)`
+- `huggingface`,
+- `frontend`
+- `npm`
+- `flask`
+- `flask_cors`
+- `pymupdf`
 
 ## Models
 ```sh
