@@ -209,9 +209,10 @@ def initialize_chain():
                 logging.info(f"Data is empty or not a valid string! for {link}")
         data_well = data_well + document_pool
 
-    if data_well is None:
+    if not data_well:
         logging.error("Failed to load documents.")
         return
+
     # Split the documents
     chunks = split_documents(data_well)
 
@@ -226,7 +227,7 @@ def initialize_chain():
 
     # Create a chain
     chain = create_chain(retriever, llm)
-    logging.info("Chain initialized successfully.")
+    return chain
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -239,10 +240,10 @@ def chat():
         chain = initialize_chain()
 
     data = request.get_json()
-    if not data or 'query' not in data:
-        return jsonify({"error": "Invalid input. Please provide a 'query' field."}), 400
+    if not data or 'message' not in data:
+        return jsonify({"error": "Invalid input. Please provide a 'message' field."}), 400
 
-    query = data['query']
+    query = data['message']
     if not query.strip():
         return jsonify({"error": "Query cannot be empty."}), 400
 
@@ -256,4 +257,5 @@ def chat():
         return jsonify({"error": "An error occurred while processing the query."}), 500
 
 if __name__ == '__main__':
+    chain = initialize_chain()
     app.run(debug=True, port=8000)
