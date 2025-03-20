@@ -6,7 +6,7 @@ import ChatMessages from "@/components/ChatMessages";
 import ChatInput from "@/components/ChatInput";
 function Chatbot() {
   const [chatId, setChatId] = useState(null);
-  const [messages, setMessages] = useImmer([]);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
   const isLoading = messages.length && messages[messages.length - 1].loading;
@@ -15,11 +15,13 @@ function Chatbot() {
     const trimmedMessage = newMessage.trim();
     if (!trimmedMessage || isLoading) return;
 
-    setMessages((draft) => [
-      ...draft,
+    let temp = [
+      ...messages,
       { role: "user", content: trimmedMessage },
       { role: "assistant", content: "", sources: [], loading: true },
-    ]);
+    ]
+
+    setMessages(temp);
     setNewMessage("");
 
     let chatIdOrNew = chatId;
@@ -31,20 +33,15 @@ function Chatbot() {
       }
 
       const stream = await api.sendChatMessage(chatIdOrNew, trimmedMessage);
-      for await (const textChunk of parseSSEStream(stream)) {
-        setMessages((draft) => {
-          draft[draft.length - 1].content += textChunk;
-        });
-      }
-      setMessages((draft) => {
-        draft[draft.length - 1].loading = false;
-      });
+      temp[temp.length-1].content = stream.response
+      temp[temp.length-1].loading = false
+      setMessages(temp)
     } catch (err) {
       console.log(err);
-      setMessages((draft) => {
-        draft[draft.length - 1].loading = false;
-        draft[draft.length - 1].error = true;
-      });
+      let temp = messages;
+      temp[temp.length-1]['error'] = true
+      temp[temp.length-1].loading = false
+      setMessages(temp);
     }
   }
 

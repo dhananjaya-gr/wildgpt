@@ -22,7 +22,7 @@ async function sendChatMessage(chatId, message) {
   if (!res.ok) {
     return Promise.reject({ status: res.status, data: await res.json() });
   }
-  return res.body;
+  return res.json();
 }
 
 export default {
