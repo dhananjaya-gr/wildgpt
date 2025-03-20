@@ -1,7 +1,8 @@
-# Hackoholic Bot
+# WildGPT 
 
 ## Overview
-Hackoholic Bot is a highly maintainable Python-based Generative AI project designed to process and analyze PDF documents and web-scraped content. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing.
+WildGPT is AI based chatbot application powered to scrape and consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing. It is a highly maintainable Python-based Generative AI project designed to process and analyze PDF documents and web-scraped content.
+
 We designed the cost-effective bot to scrape online data from web pages. The process of opening web pages and extracting data is automated. Our custom open source ollama model generates the rich information on wildlife, biodiversity, and conservation using the gathered knowledge base
 
 ## Authors
@@ -26,6 +27,15 @@ We designed the cost-effective bot to scrape online data from web pages. The pro
 - `langchain.retrievers.multi_query`
 - `webscrap`
 - `langchain.schema`
+- `selenium`
+- `chrome`
+- `python 3.12 (preferred)`
+- `huggingface`,
+- `frontend`
+- `npm`
+- `flask`
+- `flask_cors`
+- `pymupdf`
 
 ## Models
 ```sh
