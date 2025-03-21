@@ -12,40 +12,9 @@ We designed the cost-effective bot to scrape online data from web pages. The pro
 - Shrish Jain
 
 ## Dependencies
-- `os`
-- `re`
-- `fitz`
-- `ollama`
-- `logging`
-- `langchain_community.document_loaders`
-- `langchain_text_splitters`
-- `langchain_community.vectorstores`
-- `langchain.prompts`
-- `langchain_core.output_parsers`
-- `langchain_ollama`
-- `langchain_core.runnables`
-- `langchain.retrievers.multi_query`
-- `webscrap`
-- `langchain.schema`
-- `selenium`
-- `chrome`
-- `python 3.12 (preferred)`
-- `huggingface`,
-- `frontend`
-- `npm`
-- `flask`
-- `flask_cors`
-- `pymupdf`
-
-## Models
-```sh
-(mrinal_env) (base) mriraj@hackaholic % ollama list
-NAME                                                 ID              SIZE      MODIFIED     
-nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago     
-Hackaholics:latest                                   5355ef75aa0b    4.9 GB    37 hours ago    
-llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
-(mrinal_env) (base) mriraj@hackaholic % 
-```
+- Google Chrome
+- Anaconda
+- Ollama Engine
 
 ## Constants
 - `EMBEDDING_MODEL`: 'nomic-embed-text'
@@ -54,107 +23,10 @@ llama3.1:latest                                      46e0c10c039e    4.9 GB    3
 - `DOC_FOLDER`: Path to the folder containing PDF documents which has index
 - `RES_FOLDER`: Path to the folder containing resources that are available locally
 
-## Functions
 
-#### `extract_links_from_pdf(pdf_path)`
-Extracts all hyperlinks from a given PDF file from all the pages.
+# Deployment
 
-**Parameters:**
-- `pdf_path`: The file path to the PDF document.
-
-**Returns:**
-- A list of unique URLs found in the PDF.
-
-#### `ingest_pdf(doc_path, folder=False)`
-Ingests a PDF file or a folder of PDF files and returns the text content.
-
-**Parameters:**
-- `doc_path`: The path to the PDF file or folder.
-- `folder`: Boolean indicating if the path is a folder.
-
-**Returns:**
-- The text content of the PDF file(s).
-
-#### `split_documents(documents)`
-Splits the documents into smaller chunks.
-
-**Parameters:**
-- `documents`: The documents to split.
-
-**Returns:**
-- The chunks.
-
-#### `create_vector_db(chunks)`
-Creates a vector database from the chunks.
-
-**Parameters:**
-- `chunks`: The chunks.
-
-**Returns:**
-- The vector database.
-
-#### `create_retriever(vector_db, llm)`
-Creates a retriever from the vector database and the language model.
-
-**Parameters:**
-- `vector_db`: The vector database.
-- `llm`: The language model.
-
-**Returns:**
-- The retriever.
-
-#### `create_chain(retriever, llm)`
-Creates a chain from the retriever and the language model.
-
-**Parameters:**
-- `retriever`: The retriever.
-- `llm`: The language model.
-
-**Returns:**
-- The chain.
-
-#### `createChat()`
-Creates a new chat session by sending a POST request to the /chats endpoint.
-
-**Implementation:**
-```javascript
-async function createChat() {
-  const res = await fetch("http://localhost:8000" + "/chats", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await res.json();
-  if (!res.ok) {
-    return Promise.reject({ status: res.status, data });
-  }
-  return data;
-}
-```
-
-```javascript
-createChat()
-  .then(data => {
-    console.log("Chat created successfully:", data);
-  })
-  .catch(error => {
-    console.error("Error creating chat:", error);
-  });
-```
-
-**Details: (For Debugging)**
-
-- Method: POST
-- URL: http://localhost:8000/chats
-- Headers: Content-Type: application/json
-- Body: {"message": "<your_query_here>"}
-- Response: The function returns a promise that resolves to the JSON data from the response if the request is successful. If the request fails, it rejects the promise with an object containing the status code and the response data.
-
-#### `main()`
-Main function to run the Hackoholic Bot. It ingests documents, splits them into chunks, creates a vector database, and processes user queries.
-
-### Usage
-
-## Creating virtual-env for deployment
+## Creating virtual environment
 ```
 conda --version
 conda init
@@ -166,7 +38,7 @@ pip install -r requirement.txt
 conda env remove -n<new_venv_name>
 ```
 
-## Run Ollama Engine (Terminal 1)
+## Running Ollama Engine (Terminal 1)
 ```
 ollama serve
 ```
@@ -223,7 +95,7 @@ llama_model_loader: - type  f32:   51 tensors
 llama_model_loader: - type  f16:   61 tensors
 ```
 
-## Run Backend Server (Terminal 2)
+## Running Backend Server (Terminal 2)
 ```
 python /<your_absolute_path_from_root>/wildgpt/app.py
 ```
@@ -241,7 +113,7 @@ INFO:werkzeug: * Debugger PIN: 328-018-644
 Backend Available on http://127.0.0.1:8000/chat for REST calls
 ```
 
-## Run Frontend Server (Terminal 3)
+## Running Frontend Server (Terminal 3)
 ```
 cd /<your_absolute_path_from_root>/wildgpt/frontend/
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -267,7 +139,7 @@ Browserslist: caniuse-lite is outdated. Please run:
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 ```
  
-## Run WildGPTChatbot Shell version (Terminal 4) - Optional
+## Running WildGPTChatbot Shell version (Terminal 4) - Optional
 ```
 python /<your_absolute_path_from_root>/wildgpt/wildpgt_chatbot.py
 ```
@@ -281,15 +153,39 @@ This is how a shell version of successful chatbot deployment should look like -
 
 ========================================================================================================================================================================================================
 
-
 [User's query]: >>> 
 ```
 
-## Decommisioning : Disabling & Deleting venv
-Stop the Frontend Server
-Stop the Backend Server
-Stop the Ollama Server
-Stop Shell version of WildGPT
+# Debugging if something isn't as expected
+
+## For Ollama engine
+```sh
+(mrinal_env) (base) mriraj@wildgpt % ollama list
+NAME                                                 ID              SIZE      MODIFIED     
+nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago     
+WildGPT:latest                                       5355ef75aa0b    4.9 GB    37 hours ago    
+llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
+(mrinal_env) (base) mriraj@wildgpt % 
+```
+## For Backend server
+```
+- Method: POST
+- URL: http://localhost:8000/chats
+- Headers: Content-Type: application/json
+- Body: {"message": "<your_query_here>"}
+- Response: The function returns a promise that resolves to the JSON data from the response if the request is successful. If the request fails, it rejects the promise with an object containing the status code and the response data.
+```
+
+# Decommisioning : Disabling & Deleting venv
+
+## Stopping running services
+Using Ctrl+c
+- Stop Shell version of WildGPT (if running)
+- Stop the Frontend Server,
+- Stop the Backend Server and
+- Stop the Ollama Server
+
+## Deactivating & Deleting virtual environment
 ```
 conda deactivate
 conda env remove -n<new_venv_name>
