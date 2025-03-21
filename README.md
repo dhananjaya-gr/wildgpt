@@ -35,7 +35,6 @@ conda env list
 source /opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh
 conda activate <new_venv_name>
 pip install -r requirement.txt
-conda env remove -n<new_venv_name>
 ```
 
 ## Running Ollama Engine (Terminal 1)
