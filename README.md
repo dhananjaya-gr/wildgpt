@@ -190,5 +190,5 @@ Use Ctrl + C to stop:
 #### 🧼 Deactivating & Deleting Virtual Environment
 ```
 conda deactivate
-conda env remove -n<new_venv_name>
+conda env remove -n <new_venv_name>
 ```
