@@ -25,7 +25,7 @@ We designed a cost-effective bot 💸 to scrape online data from web pages 🌐.
 - MODEL: ‘llama3.1’
 - DOC_FOLDER: Path to the folder containing PDF documents 📚
 - RES_FOLDER: Path to the folder containing resources that are available locally 📁
- 
+
 
 ## 🚀 Deployment
 
@@ -37,7 +37,7 @@ conda create -n <new_venv_name> python=3.12
 conda env list
 source /opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh
 conda activate <new_venv_name>
-pip install -r requirement.txt
+pip install -r requirements.txt
 ```
 
 ### 🔥 Running Ollama Engine (Terminal 1)
@@ -140,7 +140,7 @@ Browserslist: caniuse-lite is outdated. Please run:
   npx update-browserslist-db@latest
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 ```
- 
+
 ### 💬 Running WildGPT Chatbot Shell Version (Terminal 4) - Optional
 ```
 python /<your_absolute_path_from_root>/wildgpt/wildpgt_chatbot.py
@@ -155,7 +155,7 @@ When successful, you’ll see:
 
 ========================================================================================================================================================================================================
 
-[User's query]: >>> 
+[User's query]: >>>
 ```
 
 ### 🐞 Debugging if Something Isn’t as Expected
@@ -163,11 +163,11 @@ When successful, you’ll see:
 #### 🧠 For Ollama Engine
 ```sh
 (mrinal_env) (base) mriraj@wildgpt % ollama list
-NAME                                                 ID              SIZE      MODIFIED     
-nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago     
-WildGPT:latest                                       5355ef75aa0b    4.9 GB    37 hours ago    
-llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
-(mrinal_env) (base) mriraj@wildgpt % 
+NAME                                                 ID              SIZE      MODIFIED
+nomic-embed-text:latest                              0a109f422b47    274 MB    3 hours ago
+WildGPT:latest                                       5355ef75aa0b    4.9 GB    37 hours ago
+llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago
+(mrinal_env) (base) mriraj@wildgpt %
 ```
 #### 🖥️ For Backend Server
 ```

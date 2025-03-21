@@ -142,9 +142,9 @@ def create_retriever(vector_db, llm):
     :param llm: the language model
     :return: the retriever
     """
-    QUERY_PROMPT = PromptTemplate(input_variables=["question"], #template="\f'{context_template}' Original question: {question}")
+    QUERY_PROMPT = PromptTemplate(input_variables=["question"],
                                   template="""You are an AI language model assistant named as WildGPT.
-                                  Your task is to generate seven different versions of the question given by user to retrieve relevant documents from a vector database.
+                                  Your task is to generate ten different versions of the question given by user to retrieve relevant documents from a vector database.
                                   By generating multiple perspectives on the question by user, your goal is to help the user overcome some of the limitations of the distance-based similarity search.
                                   Provide these alternative questions separated by newlines. Make sure to give enough information which covers the aspects of What, Why, When, Where, Who, How, and Which.
                                   Also, initially before recieving your first query introduce yourself and start with a list of all the things you can do.
@@ -185,7 +185,8 @@ def main():
 
     if index_links:
         document_pool = list()
-        for link in index_links[:2]:
+        # Restricting to 5 links for now
+        for link in index_links[:5]:
             data = ingest_pdf(link, folder=False)
             if data and isinstance(data, str):
                 document_pool.append(Document(page_content=data))

@@ -33,7 +33,6 @@ app = Flask(__name__)
 # Enable CORS for all routes
 CORS(app)
 
-
 # Constants
 EMBEDDING_MODEL = 'nomic-embed-text'
 VECTOR_STORE_NAME = 'simple_rag'
@@ -201,7 +200,8 @@ def initialize_chain():
 
     if index_links:
         document_pool = list()
-        for link in index_links[:2]:
+        # Restricting to 5 links for now
+        for link in index_links[:5]:
             data = ingest_pdf(link, folder=False)
             if data and isinstance(data, str):
                 document_pool.append(Document(page_content=data))
