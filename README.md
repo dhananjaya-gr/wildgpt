@@ -1,32 +1,35 @@
-# WildGPT 
+# 🐾 WildGPT
 
-## Overview
-WildGPT is AI based chatbot application powered to scrape and consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation. It uses various libraries and tools to extract, ingest, and split documents, and then create a retriever and chain for further processing. It is a highly maintainable Python-based Generative AI project designed to process and analyze PDF documents and web-scraped content.
+## 🌿 Overview
 
-We designed the cost-effective bot to scrape online data from web pages. The process of opening web pages and extracting data is automated. Our custom open source ollama model generates the rich information on wildlife, biodiversity, and conservation using the gathered knowledge base
+WildGPT is an AI-based chatbot application 🤖 designed to scrape and consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation. 🌱🦅
 
-## Authors
-- Mrinal Raj
-- Dhananjaya G R
-- Sri Sai Pamu
-- Shrish Jain
+It uses various libraries and tools 📚 to extract, ingest, and split documents, and then creates a retriever and chain for further processing. It’s a highly maintainable Python-based Generative AI project 🐍⚡ that processes and analyzes PDF documents and web-scraped content.
 
-## Dependencies
-- Google Chrome
-- Anaconda
-- Ollama Engine
+We designed a cost-effective bot 💸 to scrape online data from web pages 🌐. The process of opening web pages and extracting data is automated. Our custom open-source Ollama model 📊 generates rich information on wildlife, biodiversity, and conservation using the gathered knowledge base.
 
-## Constants
-- `EMBEDDING_MODEL`: 'nomic-embed-text'
-- `VECTOR_STORE_NAME`: 'simple_rag'
-- `MODEL`: 'llama3.1'
-- `DOC_FOLDER`: Path to the folder containing PDF documents which has index
-- `RES_FOLDER`: Path to the folder containing resources that are available locally
+### 👥 Authors
+- 🧑‍💻 Mrinal Raj
+- 🧑‍💻 Dhananjaya G R
+- 🧑‍💻 Sri Sai Pamu
+- 🧑‍💻 Shrish Jain
 
+### 📦 Dependencies
+- 🌐 Google Chrome
+- 🐍 Anaconda
+- 🧠 Ollama Engine
 
-# Deployment
+### ⚙️ Constants
+- EMBEDDING_MODEL: ‘nomic-embed-text’
+- VECTOR_STORE_NAME: ‘simple_rag’
+- MODEL: ‘llama3.1’
+- DOC_FOLDER: Path to the folder containing PDF documents 📚
+- RES_FOLDER: Path to the folder containing resources that are available locally 📁
+ 
 
-## Creating virtual environment
+## 🚀 Deployment
+
+### 🛠️ Creating Virtual Environment
 ```
 conda --version
 conda init
@@ -37,11 +40,11 @@ conda activate <new_venv_name>
 pip install -r requirement.txt
 ```
 
-## Running Ollama Engine (Terminal 1)
+### 🔥 Running Ollama Engine (Terminal 1)
 ```
 ollama serve
 ```
-This is how a successful deployment on Ollama Engine should look like
+You should see something like this when deployment is successful ✅:
 ```sh
 2025/03/21 08:48:44 routes.go:1230: INFO server config env="map[HTTPS_PROXY: HTTP_PROXY: NO_PROXY: OLLAMA_CONTEXT_LENGTH:2048 OLLAMA_DEBUG:false OLLAMA_FLASH_ATTENTION:false OLLAMA_GPU_OVERHEAD:0 OLLAMA_HOST:http://127.0.0.1:11434 OLLAMA_KEEP_ALIVE:5m0s OLLAMA_KV_CACHE_TYPE: OLLAMA_LLM_LIBRARY: OLLAMA_LOAD_TIMEOUT:5m0s OLLAMA_MAX_LOADED_MODELS:0 OLLAMA_MAX_QUEUE:512 OLLAMA_MODELS:/Users/dguntira/.ollama/models OLLAMA_MULTIUSER_CACHE:false OLLAMA_NEW_ENGINE:false OLLAMA_NOHISTORY:false OLLAMA_NOPRUNE:false OLLAMA_NUM_PARALLEL:0 OLLAMA_ORIGINS:[http://localhost https://localhost http://localhost:* https://localhost:* http://127.0.0.1 https://127.0.0.1 http://127.0.0.1:* https://127.0.0.1:* http://0.0.0.0 https://0.0.0.0 http://0.0.0.0:* https://0.0.0.0:* app://* file://* tauri://* vscode-webview://* vscode-file://*] OLLAMA_SCHED_SPREAD:false http_proxy: https_proxy: no_proxy:]"
 time=2025-03-21T08:48:44.061+05:30 level=INFO source=images.go:432 msg="total blobs: 20"
@@ -94,7 +97,7 @@ llama_model_loader: - type  f32:   51 tensors
 llama_model_loader: - type  f16:   61 tensors
 ```
 
-## Running Backend Server (Terminal 2)
+### 🧩 Running Backend Server (Terminal 2)
 ```
 python /<your_absolute_path_from_root>/wildgpt/app.py
 ```
@@ -112,7 +115,7 @@ INFO:werkzeug: * Debugger PIN: 328-018-644
 Backend Available on http://127.0.0.1:8000/chat for REST calls
 ```
 
-## Running Frontend Server (Terminal 3)
+### 🌐 Running Frontend Server (Terminal 3)
 ```
 cd /<your_absolute_path_from_root>/wildgpt/frontend/
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
@@ -121,7 +124,7 @@ npm install 20
 npm use 20
 npm run dev
 ```
-You can open frontend on Chrome browser by using Local socket or Network socket
+Open the frontend in Google Chrome 🌐 by using Local or Network socket:
 ```sh
 
 > wildlife-chatbot-frontend@0.0.0 dev
@@ -138,11 +141,11 @@ Browserslist: caniuse-lite is outdated. Please run:
   Why you should do it regularly: https://github.com/browserslist/update-db#readme
 ```
  
-## Running WildGPTChatbot Shell version (Terminal 4) - Optional
+### 💬 Running WildGPT Chatbot Shell Version (Terminal 4) - Optional
 ```
 python /<your_absolute_path_from_root>/wildgpt/wildpgt_chatbot.py
 ```
-This is how a shell version of successful chatbot deployment should look like -
+When successful, you’ll see:
 ```sh
  Hey there !!
     I'm WildGPT, an AI-powered tool designed to scrape and consolidate publicly available research papers and data related to wildlife, biodiversity, and conservation.
@@ -155,9 +158,9 @@ This is how a shell version of successful chatbot deployment should look like -
 [User's query]: >>> 
 ```
 
-# Debugging if something isn't as expected
+### 🐞 Debugging if Something Isn’t as Expected
 
-## For Ollama engine
+#### 🧠 For Ollama Engine
 ```sh
 (mrinal_env) (base) mriraj@wildgpt % ollama list
 NAME                                                 ID              SIZE      MODIFIED     
@@ -166,7 +169,7 @@ WildGPT:latest                                       5355ef75aa0b    4.9 GB    3
 llama3.1:latest                                      46e0c10c039e    4.9 GB    37 hours ago    
 (mrinal_env) (base) mriraj@wildgpt % 
 ```
-## For Backend server
+#### 🖥️ For Backend Server
 ```
 - Method: POST
 - URL: http://localhost:8000/chats
@@ -175,16 +178,16 @@ llama3.1:latest                                      46e0c10c039e    4.9 GB    3
 - Response: The function returns a promise that resolves to the JSON data from the response if the request is successful. If the request fails, it rejects the promise with an object containing the status code and the response data.
 ```
 
-# Decommisioning : Disabling & Deleting venv
+### 🧹 Decommissioning: Disabling & Deleting venv
 
-## Stopping running services
-Using Ctrl+c
-- Stop Shell version of WildGPT (if running)
-- Stop the Frontend Server,
-- Stop the Backend Server and
-- Stop the Ollama Server
+#### ⛔ Stopping Running Services
+Use Ctrl + C to stop:
+- 🐚 Shell version of WildGPT (if running)
+- 🌐 Frontend Server
+- ⚙️ Backend Server
+- 🧠 Ollama Engine
 
-## Deactivating & Deleting virtual environment
+#### 🧼 Deactivating & Deleting Virtual Environment
 ```
 conda deactivate
 conda env remove -n<new_venv_name>
