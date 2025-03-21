@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useImmer } from "use-immer";
 import api from "@/api";
-import { parseSSEStream } from "@/utils";
 import ChatMessages from "@/components/ChatMessages";
 import ChatInput from "@/components/ChatInput";
+
 function Chatbot() {
   const [chatId, setChatId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -15,14 +14,15 @@ function Chatbot() {
     const trimmedMessage = newMessage.trim();
     if (!trimmedMessage || isLoading) return;
 
-    let temp = [
+    // Create a new message array without mutating the original
+    const newMessages = [
       ...messages,
       { role: "user", content: trimmedMessage },
       { role: "assistant", content: "", sources: [], loading: true },
-    ]
+    ];
 
-    setMessages(temp);
-    setNewMessage("");
+    setMessages(newMessages); // Set new messages array
+    setNewMessage(""); // Reset the input message
 
     let chatIdOrNew = chatId;
     try {
@@ -33,15 +33,27 @@ function Chatbot() {
       }
 
       const stream = await api.sendChatMessage(chatIdOrNew, trimmedMessage);
-      temp[temp.length-1].content = stream.response
-      temp[temp.length-1].loading = false
-      setMessages(temp)
+      
+      // Create a copy of the last message and update its content
+      const updatedMessages = [...newMessages];
+      updatedMessages[updatedMessages.length - 1] = {
+        ...updatedMessages[updatedMessages.length - 1],
+        content: stream.response,
+        loading: false,
+      };
+
+      setMessages(updatedMessages); // Update messages state
+
     } catch (err) {
       console.log(err);
-      let temp = messages;
-      temp[temp.length-1]['error'] = true
-      temp[temp.length-1].loading = false
-      setMessages(temp);
+      const updatedMessages = [...newMessages];
+      updatedMessages[updatedMessages.length - 1] = {
+        ...updatedMessages[updatedMessages.length - 1],
+        error: true,
+        loading: false,
+      };
+
+      setMessages(updatedMessages); // Update messages state with error
     }
   }
 
