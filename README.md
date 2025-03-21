@@ -117,8 +117,8 @@ Backend Available on http://127.0.0.1:8000/chat for REST calls
 cd /<your_absolute_path_from_root>/wildgpt/frontend/
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 export NVM_DIR="$HOME/.nvmn["\n[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm\n[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-nvm install 20
-nvm use 20
+npm install 20
+npm use 20
 npm run dev
 ```
 You can open frontend on Chrome browser by using Local socket or Network socket
